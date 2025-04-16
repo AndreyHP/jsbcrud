@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>${title}</title>
+</head>
+<body>
+<div id="wrap">
+
+    <header>
+        <a href="/">${logo}</a>
+        <h1>${sitename}</h1>
+    </header>
+    <hr>
+
+    <#if !disable_nav?? || !disable_nav>
+    <nav>
+        <a href="/">Início</a>
+        <a href="/thing/new">Novo</a>
+        <a href="/cat/list">Categorias</a>
+        <a href="/about">Sobre</a>
+        <#if loggedUser??>
+        <span>Olá ${loggedUser.name}!
+            <a href="/logout" onclick="return confirm('Tem certeza que deseja sair do aplicativo?')">Sair</a>
+        </span>
+    </#if>
+    </nav>
+    <hr>
+</#if>
+
+<main>

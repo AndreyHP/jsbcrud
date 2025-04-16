@@ -1,0 +1,26 @@
+<#include "_header.html">
+
+<h2>Faça login!</h2>
+<p>Você precisa fazer login para usar o aplicativo.</p>
+
+<#if error??>
+<p style="color: red;"><strong>${error}</strong></p>
+</#if>
+
+<form method="post" name="login" action="/login">
+    <p>
+        <label for="loginEmail">E-mail:</label>
+        <input type="email" name="email" id="loginEmail" required>
+    </p>
+
+    <p>
+        <label for="loginPassword">Senha:</label>
+        <input type="password" name="password" id="loginPassword" required>
+    </p>
+
+    <p>
+        <button type="submit">Entrar</button>
+    </p>
+</form>
+
+<#include "_footer.html">
