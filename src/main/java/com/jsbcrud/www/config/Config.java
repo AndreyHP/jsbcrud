@@ -23,7 +23,7 @@ public class Config {
     private final String headerName = "<span>Java Spring Boot</span><span> CRUD</span>";
     private final String shortName = "JSBCRUD";
     private final int year = 2025;
-    private final String copyright = "&copy [YEAR] Hugo Azevedo";
+    private final String copyright = "&copy [YEAR] Andrey Marins";
     private final String logo = "&#128230";
     private final int cookieHoursLive = 48;
 
