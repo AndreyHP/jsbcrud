@@ -90,4 +90,56 @@ public class CategoryController {
         redirectAttributes.addFlashAttribute("success", "Categoria '" + category.getName() + "' criada com sucesso!");
         return "redirect:/cat/new";
     }
+
+    @GetMapping("/edit/{id}")
+    public String editCategory(@PathVariable Integer id, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+
+        Account loggedUser = (Account) request.getAttribute("loggedUser");
+
+        if (loggedUser == null || loggedUser.getType() != Account.Type.ADMIN) {
+            redirectAttributes.addFlashAttribute("error", "Acesso negado!");
+            return "redirect:/cat/list";
+        }
+
+        Category category = categoryRepository.findById(id).orElse(null);
+
+        if (category == null || category.getStatus() != Category.Status.ON) {
+            redirectAttributes.addFlashAttribute("error", "Categoria não encontrada!");
+            return "redirect:/cat/list";
+        }
+
+        model.addAttribute("title", config.getShortName() + " - Editar Categoria - " + category.getName());
+        model.addAttribute("category", category);
+
+        return "cat/edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String updateCategory(@PathVariable Integer id,
+                                 @RequestParam String name,
+                                 @RequestParam String description,
+                                 RedirectAttributes redirectAttributes,
+                                 HttpServletRequest request
+    ) {
+
+        Account loggedUser = (Account) request.getAttribute("loggedUser");
+        if (loggedUser == null || loggedUser.getType() != Account.Type.ADMIN) {
+            redirectAttributes.addFlashAttribute("error", "Acesso negado!");
+            return "redirect:/cat/list";
+        }
+
+        Category category = categoryRepository.findById(id).orElse(null);
+        if (category == null || category.getStatus() != Category.Status.ON) {
+            redirectAttributes.addFlashAttribute("error", "Categoria não encontrada!");
+            return "redirect:/cat/list";
+        }
+
+        category.setName(name);
+        category.setDescription(description);
+        categoryRepository.save(category);
+
+        redirectAttributes.addFlashAttribute("success", "Categoria atualizada com sucesso!");
+
+        return "redirect:/cat/list";
+    }
 }
