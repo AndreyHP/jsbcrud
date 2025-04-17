@@ -1,5 +1,38 @@
 <#include "../_header.html">
 
-<h2>Nova Category</h2>
+<h2>Nova Categoria</h2>
+
+<#-- Exibe mensagens de erro ou sucesso -->
+<#if error??>
+<p class="error" id="message1">${error}</p>
+<script>
+    const closeMessage = setTimeout(() => {
+        document.getElementById('message1').style.display='none';
+    }, 5000);
+</script>
+</#if>
+<#if success??>
+<p class="success" id="message2">${success}</p>
+<script>
+    const closeMessage = setTimeout(() => {
+        document.getElementById('message2').style.display='none';
+    }, 5000);
+</script>
+</#if>
+
+<form action="/cat/new" method="post">
+    <p>
+        <label for="name">Nome:</label>
+        <input type="text" id="name" name="name" required>
+    <p>
+    <p>
+        <label for="description">Descrição:</label>
+        <input type="text" id="description" name="description" required>
+    </p>
+    <p>
+        <button type="submit">Salvar</button>
+        <button type="button" onclick="location.href='/cat/list'">Lista de Categorias</button>
+    </p>
+</form>
 
 <#include "../_footer.html">
