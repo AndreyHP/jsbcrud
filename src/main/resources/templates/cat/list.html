@@ -1,5 +1,25 @@
 <#include "../_header.html">
 
-<h2>Lista de Category</h2>
+<h2>Lista de Categorias</h2>
+
+<#if loggedUser?? && loggedUser.type == "ADMIN">
+<p><a href="/cat/new">Nova Categoria</a></p>
+</#if>
+
+<#if categories?has_content>
+<ul>
+    <#list categories as cat>
+    <li>
+        <strong>${cat.name}</strong> - ${cat.description}
+        <#if loggedUser?? && loggedUser.type == "ADMIN">
+        | <a href="/cat/edit/${cat.id}">Editar</a>
+        | <a href="/cat/delete/${cat.id}" onclick="return confirm('Tem certeza que deseja apagar esta categoria?')">Apagar</a>
+    </#if>
+    </li>
+</#list>
+</ul>
+<#else>
+<p>Não há categorias ativas.</p>
+</#if>
 
 <#include "../_footer.html">
