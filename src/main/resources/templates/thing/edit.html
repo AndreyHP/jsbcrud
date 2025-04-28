@@ -1,6 +1,6 @@
 <#include "../_header.html">
 
-<h2>Novo Item</h2>
+<h2>Editar Item</h2>
 
 <#if error??>
 <p class="error" id="message1">${error}</p>
@@ -19,38 +19,47 @@
 </script>
 </#if>
 
-<form action="/thing/new" method="post">
+<form action="/thing/edit/${thing.id}" method="post">
     <p>
         <label for="name">Nome:</label>
-        <input type="text" id="name" name="name" required>
+        <input type="text" id="name" name="name" value="${thing.name}" required>
     </p>
+
     <p>
         <label for="description">Descrição:</label>
-        <textarea id="description" name="description" required></textarea>
+        <textarea id="description" name="description">${thing.description}</textarea>
     </p>
+
     <p>
         <label for="location">Localização:</label>
-        <input type="text" id="location" name="location" required>
+        <input type="text" id="location" name="location" value="${thing.location}">
     </p>
+
     <p>
         <label for="photo">Foto (URL):</label>
-        <input type="text" id="photo" name="photo">
+        <input type="text" id="photo" name="photo" value="${thing.photo}">
     </p>
+
     <p>
         <label for="price">Preço:</label>
-        <input type="number" step="0.01" id="price" name="price">
+        <input type="number" id="price" name="price" value="${thing.price?string.computer}" step="0.01">
     </p>
+
     <p>
-        <label for="categories">Categorias:</label><br>
+        <label for="categories">Categorias:</label>
         <select id="categories" name="categories" multiple>
             <#list categories as category>
-            <option value="${category.id}">${category.name}</option>
-        </#list>
-        </select>
+            <option value="${category.id}"
+            <#if thing.categories?map(c -> c.id)?seq_contains(category.id)>selected</#if>>${category.name}</option>
+    </#list>
+    </select>
     </p>
+
     <p>
         <button type="submit">Salvar</button>
-        <button type="button" onclick="location.href='/'">Todos os Itens</button>
+        <button type="button" onclick="window.location.href='/thing/view/${thing.id}';">
+            Voltar para ${thing.name}
+        </button>
     </p>
 </form>
 
