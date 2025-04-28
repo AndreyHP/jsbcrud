@@ -1,5 +1,30 @@
 <#include "../_header.html">
 
-<h2>Detalhes do Thing</h2>
+<h2>${thing.name}</h2>
+
+<p><img src="${thing.photo}" alt="${thing.name}"></p>
+
+<p><strong>ID:</strong> ${thing.id}</p>
+<p><strong>Descrição:</strong> ${thing.description}</p>
+<p><strong>Data de Criação:</strong> ${thing.date}</p>
+<p><strong>Preço:</strong> ${thing.price}</p>
+<p><strong>Criado por: </strong> (${owner.id}) ${owner.name}</p>
+<p><strong>Categorias:</strong></p>
+<#if categories?has_content>
+<ul>
+    <#list categories as category>
+    <li>${category.name} - ${category.description}</li>
+</#list>
+</ul>
+<#else>
+<p>Sem categorias.</p>
+</#if>
+
+<#if loggedUser?? && (loggedUser.id == thing.account.id || loggedUser.type == "ADMIN")>
+<p>
+    <a href="/thing/edit/${thing.id}">Editar</a> |
+    <a href="/thing/delete/${thing.id}" onclick="return confirm('Tem certeza?')">Apagar</a>
+</p>
+</#if>
 
 <#include "../_footer.html">
